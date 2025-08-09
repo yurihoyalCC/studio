@@ -10,7 +10,13 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "../ui/badge";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
-import { Terminal, Sparkles, TrendingUp, ShieldCheck, Scale, History, Shuffle } from 'lucide-react';
+import { Terminal, Sparkles, TrendingUp, ShieldCheck, Scale, History, Shuffle, Calendar as CalendarIcon } from 'lucide-react';
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
+import { cn } from "@/lib/utils";
+import { format } from "date-fns";
+import { DateRange } from "react-day-picker";
+import React from "react";
 
 const initialState = {
   message: '',
@@ -29,6 +35,7 @@ function SubmitButton() {
 
 export function AddListingForm() {
   const [state, formAction] = useActionState(getListingEstimate, initialState);
+  const [date, setDate] = React.useState<DateRange | undefined>();
 
   const breakdownIcons = {
     locationDemand: <TrendingUp className="h-5 w-5 text-accent" />,
@@ -57,8 +64,46 @@ export function AddListingForm() {
           </div>
           <div className="space-y-2">
             <Label htmlFor="dates">Dates of Stay</Label>
-            <Input id="dates" name="dates" placeholder="e.g., July 12 - July 19, 2024" />
-             {state.errors?.dates && <p className="text-sm text-destructive">{state.errors.dates[0]}</p>}
+            <Input id="dates" name="dates" type="hidden" value={
+              date?.from && date?.to ? `${format(date.from, "LLL dd, y")} - ${format(date.to, "LLL dd, y")}` : ""
+            } />
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  id="date"
+                  variant={"outline"}
+                  className={cn(
+                    "w-full justify-start text-left font-normal",
+                    !date && "text-muted-foreground"
+                  )}
+                >
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {date?.from ? (
+                    date.to ? (
+                      <>
+                        {format(date.from, "LLL dd, y")} -{" "}
+                        {format(date.to, "LLL dd, y")}
+                      </>
+                    ) : (
+                      format(date.from, "LLL dd, y")
+                    )
+                  ) : (
+                    <span>Pick a date range</span>
+                  )}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="start">
+                <Calendar
+                  initialFocus
+                  mode="range"
+                  defaultMonth={date?.from}
+                  selected={date}
+                  onSelect={setDate}
+                  numberOfMonths={2}
+                />
+              </PopoverContent>
+            </Popover>
+            {state.errors?.dates && <p className="text-sm text-destructive">{state.errors.dates[0]}</p>}
           </div>
           <div className="space-y-2">
             <Label htmlFor="unit">Unit Details</Label>
