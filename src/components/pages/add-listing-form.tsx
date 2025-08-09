@@ -42,7 +42,7 @@ function SubmitButton() {
 export function AddListingForm() {
   const [state, formAction] = useActionState(getListingEstimate, initialState);
   const [date, setDate] = React.useState<DateRange | undefined>();
-  const [unit, setUnit] = React.useState<string | undefined>();
+  const [unit, setUnit] = React.useState('');
 
   const breakdownIcons = {
     locationDemand: <TrendingUp className="h-5 w-5 text-accent" />,
@@ -115,7 +115,7 @@ export function AddListingForm() {
           <div className="space-y-2">
             <Label htmlFor="unit">Unit Details</Label>
             <Input id="unit" name="unit" type="hidden" value={unit} />
-             <Select onValueChange={setUnit}>
+             <Select onValueChange={setUnit} value={unit}>
               <SelectTrigger>
                 <SelectValue placeholder="Select unit type" />
               </SelectTrigger>
