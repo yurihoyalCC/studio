@@ -56,7 +56,7 @@ export type Listing = {
   maintenanceFeeUSD: number | null;
   tradeValueScore: number;
   creditValue: number;
-  status: 'draft' | 'active' | 'under_offer' | 'booked' | 'lottery' | 'expired' | 'blocked' | 'canceled';
+  status: 'draft' | 'active' | 'under_offer' | 'booked' | 'expired' | 'blocked' | 'canceled';
   tradeModes: {
     creditsOnly: boolean;
     tradeOnly: boolean;
@@ -94,16 +94,13 @@ export type WalletEntry = {
     | 'deposit_earn'
     | 'trade_spend'
     | 'trade_fee'
-    | 'lottery_entry'
-    | 'lottery_refund'
-    | 'lottery_retained'
     | 'purchase'
     | 'gift_receive'
     | 'gift_send'
     | 'admin_adjust'
     | 'vip_reward';
   amount: number;
-  refType: 'listing' | 'trade' | 'order' | 'lottery' | 'gift' | 'admin';
+  refType: 'listing' | 'trade' | 'order' | 'gift' | 'admin';
   refId: string;
   createdAt: string;
   signed: boolean;

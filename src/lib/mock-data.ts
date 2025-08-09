@@ -224,16 +224,6 @@ export const mockWalletEntries: WalletEntry[] = [
     description: 'Deposit: Maui Seaside Resort',
   },
   {
-    entryId: 'w-3',
-    type: 'lottery_entry',
-    amount: -100,
-    refType: 'lottery',
-    refId: 'lottery-1',
-    createdAt: '2024-05-05T18:00:00Z',
-    signed: true,
-    description: 'Entry: Cabo Sunsets Lottery',
-  },
-  {
     entryId: 'w-4',
     type: 'vip_reward',
     amount: 500,
