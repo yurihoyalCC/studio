@@ -1,6 +1,7 @@
 "use client";
 
-import { useFormState, useFormStatus } from "react-dom";
+import { useActionState } from "react";
+import { useFormStatus } from "react-dom";
 import { getListingEstimate } from "@/lib/actions";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -27,7 +28,7 @@ function SubmitButton() {
 }
 
 export function AddListingForm() {
-  const [state, formAction] = useFormState(getListingEstimate, initialState);
+  const [state, formAction] = useActionState(getListingEstimate, initialState);
 
   const breakdownIcons = {
     locationDemand: <TrendingUp className="h-5 w-5 text-accent" />,
