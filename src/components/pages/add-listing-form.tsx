@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "../ui/badge";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { Terminal, Sparkles, TrendingUp, ShieldCheck, Scale, History, Shuffle, Calendar as CalendarIcon } from 'lucide-react';
@@ -17,6 +16,13 @@ import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { DateRange } from "react-day-picker";
 import React from "react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const initialState = {
   message: '',
@@ -36,6 +42,7 @@ function SubmitButton() {
 export function AddListingForm() {
   const [state, formAction] = useActionState(getListingEstimate, initialState);
   const [date, setDate] = React.useState<DateRange | undefined>();
+  const [unit, setUnit] = React.useState<string | undefined>();
 
   const breakdownIcons = {
     locationDemand: <TrendingUp className="h-5 w-5 text-accent" />,
@@ -107,7 +114,19 @@ export function AddListingForm() {
           </div>
           <div className="space-y-2">
             <Label htmlFor="unit">Unit Details</Label>
-            <Textarea id="unit" name="unit" placeholder="e.g., 2 Bedroom Ocean View, sleeps 6" />
+            <Input id="unit" name="unit" type="hidden" value={unit} />
+             <Select onValueChange={setUnit}>
+              <SelectTrigger>
+                <SelectValue placeholder="Select unit type" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="1 bedroom">1 bedroom</SelectItem>
+                <SelectItem value="1 bedroom lock off">1 bedroom lock off</SelectItem>
+                <SelectItem value="2 bedroom">2 bedroom</SelectItem>
+                <SelectItem value="3 bedroom">3 bedroom</SelectItem>
+                <SelectItem value="4 bedroom">4 bedroom</SelectItem>
+              </SelectContent>
+            </Select>
             {state.errors?.unit && <p className="text-sm text-destructive">{state.errors.unit[0]}</p>}
           </div>
           <div className="space-y-2">
