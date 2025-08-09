@@ -9,13 +9,23 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { CalendarDays, Coins, MapPin, Tag } from "lucide-react";
+import { CalendarDays, Coins, MapPin, Repeat, Tag } from "lucide-react";
 
 type ListingCardProps = {
   listing: Listing;
 };
 
 export function ListingCard({ listing }: ListingCardProps) {
+  const getTradeModes = () => {
+    const modes = [];
+    if (listing.tradeModes.tradeOnly) modes.push("Trade Only");
+    if (listing.tradeModes.tradePlusCredits) modes.push("Trade + Credits");
+    if (listing.tradeModes.creditsOnly) modes.push("Credits Only");
+    return modes;
+  }
+
+  const tradeModes = getTradeModes();
+
   return (
     <Card className="flex flex-col overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
       <CardHeader className="p-0">
@@ -54,6 +64,15 @@ export function ListingCard({ listing }: ListingCardProps) {
             <span>{listing.resort.brand}</span>
           </div>
         </div>
+        {tradeModes.length > 0 && (
+          <div className="mt-4 flex flex-wrap gap-2">
+            {tradeModes.map(mode => (
+              <Badge key={mode} variant="outline" className="text-xs">
+                {mode}
+              </Badge>
+            ))}
+          </div>
+        )}
       </CardContent>
       <CardFooter className="p-4 bg-secondary/30 flex justify-between items-center">
         <div className="flex items-center gap-2">
