@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter }
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Wallet as WalletIcon, PlusCircle, ArrowDown, ArrowUp } from "lucide-react";
+import { VipLadder } from "@/components/vip-ladder";
 
 export default function WalletPage() {
   const user = mockUsers['user-1'];
@@ -46,18 +47,8 @@ export default function WalletPage() {
             </CardFooter>
           </Card>
 
-          <Card>
-            <CardHeader>
-              <CardTitle className="font-headline">VIP Status</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-col items-center">
-                <Badge variant="secondary" className="text-lg mb-2">{user.vipTier.charAt(0).toUpperCase() + user.vipTier.slice(1)}</Badge>
-                <p className="text-sm text-muted-foreground">Trust Score: {user.trustScore}</p>
-                {/* Could add a progress bar here for next tier */}
-              </div>
-            </CardContent>
-          </Card>
+          <VipLadder user={user} />
+
         </div>
 
         {/* Transaction History */}

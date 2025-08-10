@@ -7,6 +7,12 @@ export type User = {
   kycStatus: 'unverified' | 'pending' | 'verified' | 'rejected';
   trustScore: number;
   vipTier: 'wayfinder' | 'navigator' | 'trailblazer' | 'lighthouse';
+  vip: {
+    compositeScore: number;
+    monthlyActivityPoints: number;
+    freeLotteryEntriesRemaining: number;
+    lastVipGrantAt: string;
+  };
   creditsBalance: number;
   clubMember: boolean;
   abuseFlags: {
