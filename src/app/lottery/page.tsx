@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -32,18 +33,27 @@ export default function LotteryPage() {
           </div>
           <div className="space-y-2">
             <label htmlFor="dates" className="text-sm font-medium">Dates</label>
-            <Input id="dates" placeholder="Select your dates" type="date" />
+            <Select>
+              <SelectTrigger id="dates-filter">
+                <SelectValue placeholder="Any time" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="90">Next 90 days</SelectItem>
+                <SelectItem value="60">Next 60 days</SelectItem>
+                <SelectItem value="45">Next 45 days</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
           <div className="space-y-2">
-            <label htmlFor="credits-range" className="text-sm font-medium">Credit Range</label>
+            <label htmlFor="brand-tier" className="text-sm font-medium">Brand Tier</label>
              <Select>
-              <SelectTrigger id="credits-range">
+              <SelectTrigger id="brand-tier">
                 <SelectValue placeholder="Any" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="1"> &lt; 5,000</SelectItem>
-                <SelectItem value="2">5,000 - 10,000</SelectItem>
-                <SelectItem value="3">10,000+</SelectItem>
+                <SelectItem value="lux">Luxury</SelectItem>
+                <SelectItem value="mid">Mid-Tier</SelectItem>
+                <SelectItem value="value">Value</SelectItem>
               </SelectContent>
             </Select>
           </div>
