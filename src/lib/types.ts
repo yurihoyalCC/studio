@@ -46,6 +46,7 @@ export type Listing = {
       kitchen: boolean;
       view: 'ocean' | 'resort' | 'garden' | null;
     };
+    type: string;
   };
   stay: {
     startDate: string;
