@@ -8,6 +8,7 @@ import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { BedDouble, Calendar, Check, Coins, Kitchen, MapPin, Sparkles, Users, View, X } from "lucide-react";
+import { format } from "date-fns";
 
 export default function ListingDetailPage({ params }: { params: { id: string } }) {
   const listing = mockListings.find(l => l.listingId === params.id);
@@ -80,8 +81,8 @@ export default function ListingDetailPage({ params }: { params: { id: string } }
               </CardHeader>
               <CardContent className="space-y-4 text-muted-foreground">
                 <div className="flex items-center gap-3"><Calendar className="h-5 w-5 text-primary" /><span>{listing.stay.nights} Nights</span></div>
-                <div className="flex items-center gap-3"><span className="font-semibold">Check-in:</span><span>{new Date(listing.stay.startDate).toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</span></div>
-                <div className="flex items-center gap-3"><span className="font-semibold">Check-out:</span><span>{new Date(listing.stay.endDate).toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</span></div>
+                <div className="flex items-center gap-3"><span className="font-semibold">Check-in:</span><span>{format(new Date(listing.stay.startDate), 'EEEE, MMMM d, yyyy')}</span></div>
+                <div className="flex items-center gap-3"><span className="font-semibold">Check-out:</span><span>{format(new Date(listing.stay.endDate), 'EEEE, MMMM d, yyyy')}</span></div>
               </CardContent>
             </Card>
           </div>

@@ -1,5 +1,3 @@
-
-'use client'
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { mockLotteries, mockListings, mockUsers } from "@/lib/mock-data";
@@ -9,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Separator } from "@/components/ui/separator";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Calendar, Clock, Coins, HelpCircle, ShieldCheck, Ticket, User, Users, Info } from "lucide-react";
-import { formatDistanceToNowStrict } from "date-fns";
+import { format, formatDistanceToNowStrict } from "date-fns";
 import React from 'react';
 
 export default function LotteryDetailPage({ params }: { params: { id: string } }) {
@@ -103,7 +101,7 @@ export default function LotteryDetailPage({ params }: { params: { id: string } }
                     <div className="text-center p-4 bg-secondary rounded-lg">
                         <p className="text-sm text-muted-foreground">Drawing in</p>
                         <p className="text-2xl font-bold text-primary">{endsIn}</p>
-                         <p className="text-xs text-muted-foreground">on {new Date(lottery.drawAt).toLocaleDateString(undefined, { month: 'long', day: 'numeric'})}</p>
+                         <p className="text-xs text-muted-foreground">on {format(new Date(lottery.drawAt), 'MMMM d')}</p>
                     </div>
 
                     <div className="text-center">
@@ -136,4 +134,3 @@ export default function LotteryDetailPage({ params }: { params: { id: string } }
     </div>
   );
 }
-
