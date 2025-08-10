@@ -1,0 +1,45 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() { return request.auth != null; }
+    function isAdmin() { return isSignedIn() && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == "admin"; }
+
+    match /users/{uid} {
+      allow read: if isSignedIn() && request.auth.uid == uid || isAdmin();
+      allow write: if isSignedIn() && request.auth.uid == uid;
+    }
+
+    // Listings: owners edit basic fields; valuation writes are server-only
+    match /listings/{listingId} {
+      allow read: if true;
+      allow create: if isSignedIn();
+      allow update: if isSignedIn() && request.resource.data.ownerUid == request.auth.uid
+                    && !('creditValue' in request.resource.data) // block client changing credits
+                    && !('tradeValueScore' in request.resource.data)
+                    && !('valuation' in request.resource.data);
+      allow delete: if false; // or owner before activation
+    }
+
+    // Estimates: client may read own created docs; writes from function
+    match /estimates/{id} {
+      allow read: if isSignedIn();
+      allow write: if false; // function only
+    }
+
+    // Lottery rules
+    match /lotteries/{lotteryId} {
+      allow read: if true;
+      allow write: if false; // Only via functions
+    }
+    
+    match /lotteries/{lotteryId}/entries/{entryId} {
+        allow read: if isSignedIn() && (request.auth.uid == resource.data.uid || isAdmin());
+        allow write: if false; // Only via functions
+    }
+
+    match /admin/{doc=**} {
+      allow read, write: if isAdmin();
+    }
+  }
+}
