@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Landmark, Handshake, PlusCircle, Wallet } from "lucide-react";
+import { Landmark, Handshake, PlusCircle, Wallet, Ticket } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -10,6 +10,7 @@ import { UserNav } from "@/components/user-nav";
 
 const navItems = [
   { href: "/", label: "Marketplace", icon: Landmark },
+  { href: "/lottery", label: "Lottery", icon: Ticket },
   { href: "/offers", label: "Offers", icon: Handshake },
   { href: "/add-listing", label: "Add Listing", icon: PlusCircle },
   { href: "/wallet", label: "Wallet", icon: Wallet },

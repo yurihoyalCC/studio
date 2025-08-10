@@ -1,4 +1,4 @@
-import type { User, Listing, Offer, WalletEntry } from './types';
+import type { User, Listing, Offer, WalletEntry, Lottery } from './types';
 
 export const mockUsers: Record<string, User> = {
   'user-1': {
@@ -233,4 +233,43 @@ export const mockWalletEntries: WalletEntry[] = [
     signed: true,
     description: 'Trailblazer Monthly Reward',
   },
+];
+
+export const mockLotteries: Lottery[] = [
+  {
+    lotteryId: 'lottery-1',
+    listingId: 'listing-1',
+    ownerUid: 'user-1',
+    entryCreditCost: 100,
+    openAt: '2024-05-20T10:00:00Z',
+    closeAt: '2024-06-28T10:00:00Z',
+    drawAt: '2024-06-28T10:00:00Z',
+    status: 'open',
+    guaranteedOwnerPayoutCredits: 5780, // 85% of 6800
+    winnerUid: null,
+    resultsPublic: {
+      winnerMaskedId: null,
+      totalEntries: 23,
+    },
+    createdAt: '2024-05-20T10:00:00Z',
+    updatedAt: '2024-05-20T10:00:00Z',
+  },
+  {
+    lotteryId: 'lottery-2',
+    listingId: 'listing-2',
+    ownerUid: 'user-2',
+    entryCreditCost: 100,
+    openAt: '2024-05-18T10:00:00Z',
+    closeAt: '2024-07-01T10:00:00Z',
+    drawAt: '2024-07-01T10:00:00Z',
+    status: 'open',
+    guaranteedOwnerPayoutCredits: 5200, // ~80% of 6240
+    winnerUid: null,
+    resultsPublic: {
+      winnerMaskedId: null,
+      totalEntries: 58,
+    },
+    createdAt: '2024-05-18T10:00:00Z',
+    updatedAt: '2024-05-18T10:00:00Z',
+  }
 ];

@@ -56,7 +56,7 @@ export type Listing = {
   maintenanceFeeUSD: number | null;
   tradeValueScore: number;
   creditValue: number;
-  status: 'draft' | 'active' | 'under_offer' | 'booked' | 'expired' | 'blocked' | 'canceled';
+  status: 'draft' | 'active' | 'under_offer' | 'booked' | 'expired' | 'blocked' | 'canceled' | 'lottery';
   tradeModes: {
     creditsOnly: boolean;
     tradeOnly: boolean;
@@ -78,7 +78,7 @@ export type Offer = {
   offerId: string;
   listingId: string;
   fromUid: string;
-  toUid: string;
+  toUid:string;
   offeredListingId: string | null;
   offeredCredits: number;
   aiRank: 'low' | 'fair' | 'great';
@@ -98,11 +98,33 @@ export type WalletEntry = {
     | 'gift_receive'
     | 'gift_send'
     | 'admin_adjust'
-    | 'vip_reward';
+    | 'vip_reward'
+    | 'lottery_entry'
+    | 'lottery_refund'
+    | 'lottery_retained';
   amount: number;
-  refType: 'listing' | 'trade' | 'order' | 'gift' | 'admin';
+  refType: 'listing' | 'trade' | 'order' | 'gift' | 'admin' | 'lottery';
   refId: string;
   createdAt: string;
   signed: boolean;
   description: string;
+};
+
+export type Lottery = {
+  lotteryId: string;
+  listingId: string;
+  ownerUid: string;
+  entryCreditCost: number;
+  openAt: string;
+  closeAt: string;
+  drawAt: string;
+  status: 'open' | 'closed' | 'drawn' | 'fulfilled' | 'canceled';
+  guaranteedOwnerPayoutCredits: number;
+  winnerUid: string | null;
+  resultsPublic: {
+    winnerMaskedId: string | null;
+    totalEntries: number;
+  };
+  createdAt: string;
+  updatedAt: string;
 };
