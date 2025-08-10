@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "next/legacy/image";
 import { notFound } from "next/navigation";
 import { mockListings, mockUsers } from "@/lib/mock-data";
 import { Badge } from "@/components/ui/badge";

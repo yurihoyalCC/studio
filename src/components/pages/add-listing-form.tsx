@@ -142,7 +142,6 @@ export function AddListingForm() {
           )}
         </CardFooter>
       </form>
-
       {state.estimate && (
         <div className="p-6 border-t">
           <Card className="bg-primary/5">
