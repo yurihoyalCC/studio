@@ -1,3 +1,6 @@
+
+"use client";
+
 import type { User } from "@/lib/types";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
@@ -5,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { CheckCircle, Award, Star, Shield, ArrowRight } from "lucide-react";
 import { Button } from "./ui/button";
+import React from "react";
 
 type VipLadderProps = {
   user: User;
@@ -44,6 +48,8 @@ const tiers = {
 const tierNames = Object.keys(tiers) as (keyof typeof tiers)[];
 
 export function VipLadder({ user }: VipLadderProps) {
+  const [activeAccordionItems, setActiveAccordionItems] = React.useState<string[]>([user.vipTier]);
+
   const currentTierIndex = tierNames.indexOf(user.vipTier);
   const nextTierIndex = currentTierIndex + 1;
   const nextTier = nextTierIndex < tierNames.length ? tiers[tierNames[nextTierIndex]] : null;
@@ -55,6 +61,15 @@ export function VipLadder({ user }: VipLadderProps) {
     ((user.vip.compositeScore - scoreForCurrentTier) / (scoreForNextTier - scoreForCurrentTier)) * 100 
     : 100;
 
+  const toggleAll = () => {
+    if (activeAccordionItems.length === tierNames.length) {
+      // If all are open, close all except the current one
+      setActiveAccordionItems([user.vipTier]);
+    } else {
+      // If some/none are open, open all
+      setActiveAccordionItems(tierNames);
+    }
+  };
 
   return (
     <Card>
@@ -81,7 +96,7 @@ export function VipLadder({ user }: VipLadderProps) {
             <Badge variant="secondary">5% Lottery Discount</Badge>
         </div>
 
-        <Accordion type="single" collapsible defaultValue={user.vipTier}>
+        <Accordion type="multiple" value={activeAccordionItems} onValueChange={setActiveAccordionItems}>
           {tierNames.map((tierKey) => {
             const tier = tiers[tierKey];
             const isCurrentTier = user.vipTier === tierKey;
@@ -114,8 +129,8 @@ export function VipLadder({ user }: VipLadderProps) {
           })}
         </Accordion>
 
-        <Button variant="outline" className="w-full mt-6">
-          How to level up <ArrowRight className="ml-2 h-4 w-4" />
+        <Button variant="outline" className="w-full mt-6" onClick={toggleAll}>
+          {activeAccordionItems.length === tierNames.length ? 'Collapse' : 'How to level up'} <ArrowRight className="ml-2 h-4 w-4" />
         </Button>
       </CardContent>
     </Card>
