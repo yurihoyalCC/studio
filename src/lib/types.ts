@@ -88,7 +88,12 @@ export type Offer = {
   toUid:string;
   offeredListingId: string | null;
   offeredCredits: number;
-  aiRank: 'low' | 'fair' | 'great';
+  aiRank: 'low' | 'leaning-low' | 'fair' | 'good' | 'great';
+  aiDetails?: {
+    explanation: string;
+    suggestedTopUp: number;
+    acceptanceProbability: number;
+  };
   status: 'pending' | 'countered' | 'accepted' | 'declined' | 'expired';
   expiresAt: string;
   createdAt: string;

@@ -344,7 +344,12 @@ export const mockOffers: Offer[] = [
     toUid: 'user-1', // Alex
     offeredListingId: null,
     offeredCredits: 6500,
-    aiRank: 'fair',
+    aiRank: 'good',
+    aiDetails: {
+        explanation: "Value vs typical: 96% • Peak Season",
+        suggestedTopUp: 150,
+        acceptanceProbability: 75,
+    },
     status: 'pending',
     expiresAt: '2024-06-01T10:00:00Z',
     createdAt: '2024-05-20T10:00:00Z',
@@ -357,7 +362,12 @@ export const mockOffers: Offer[] = [
     toUid: 'user-2', // Samantha
     offeredListingId: 'listing-2', // Aspen Mountain Lodge
     offeredCredits: 1000,
-    aiRank: 'great',
+    aiRank: 'fair',
+    aiDetails: {
+        explanation: "Offer is 98% of typical value. Good resort match.",
+        suggestedTopUp: 400,
+        acceptanceProbability: 60,
+    },
     status: 'pending',
     expiresAt: '2024-05-28T10:00:00Z',
     createdAt: '2024-05-19T12:00:00Z',
@@ -371,6 +381,11 @@ export const mockOffers: Offer[] = [
     offeredListingId: null,
     offeredCredits: 4000,
     aiRank: 'low',
+    aiDetails: {
+        explanation: "Offer is only 64% of the listing's value.",
+        suggestedTopUp: 1500,
+        acceptanceProbability: 15,
+    },
     status: 'declined',
     expiresAt: '2024-05-22T10:00:00Z',
     createdAt: '2024-05-15T10:00:00Z',

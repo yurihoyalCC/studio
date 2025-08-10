@@ -7,7 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { ArrowRightLeft, Check, Coins, ThumbsDown, ThumbsUp, X } from "lucide-react";
+import { ArrowRightLeft, Check, Coins, Info, ThumbsDown, ThumbsUp, X } from "lucide-react";
+import { Progress } from "./ui/progress";
 
 type OfferCardProps = {
   offer: Offer;
@@ -16,7 +17,9 @@ type OfferCardProps = {
 
 const rankColorMap: Record<Offer['aiRank'], string> = {
     low: "bg-red-100 text-red-800 border-red-300",
+    "leaning-low": "bg-orange-100 text-orange-800 border-orange-300",
     fair: "bg-yellow-100 text-yellow-800 border-yellow-300",
+    good: "bg-sky-100 text-sky-800 border-sky-300",
     great: "bg-green-100 text-green-800 border-green-300",
 };
 
@@ -43,6 +46,7 @@ export function OfferCard({ offer, perspective }: OfferCardProps) {
   const youGetCredits = perspective === 'receiver' ? offer.offeredCredits : 0;
   
   const isPending = offer.status === 'pending';
+  const rankText = offer.aiRank.replace(/-/g, ' ');
 
   return (
     <Card className="overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
@@ -57,7 +61,7 @@ export function OfferCard({ offer, perspective }: OfferCardProps) {
             </p>
          </div>
          <div className="flex items-center gap-2">
-            {perspective === 'receiver' && <Badge className={rankColorMap[offer.aiRank]}>AI Rank: {offer.aiRank}</Badge>}
+            {perspective === 'receiver' && <Badge className={`${rankColorMap[offer.aiRank]} capitalize`}>AI Rank: {rankText}</Badge>}
             <Badge className={statusColorMap[offer.status]}>{offer.status}</Badge>
          </div>
       </CardHeader>
@@ -95,6 +99,22 @@ export function OfferCard({ offer, perspective }: OfferCardProps) {
             </div>
 
         </div>
+        {perspective === 'receiver' && offer.aiDetails && (
+            <div className="mt-4 p-3 rounded-lg bg-blue-50 border border-blue-200">
+                <div className="flex items-center gap-2 mb-2">
+                    <Info className="h-5 w-5 text-blue-600"/>
+                    <h4 className="font-semibold text-blue-800">AI Coach</h4>
+                </div>
+                <p className="text-sm text-blue-700 mb-2">{offer.aiDetails.explanation}</p>
+                {offer.aiDetails.suggestedTopUp > 0 && (
+                    <p className="text-sm text-blue-700 font-medium">✨ Add {offer.aiDetails.suggestedTopUp} credits to make this a 'Good' offer.</p>
+                )}
+                 <div className="mt-2 space-y-1">
+                    <label className="text-xs font-medium text-blue-700">Acceptance Likelihood</label>
+                    <Progress value={offer.aiDetails.acceptanceProbability} className="h-2 [&>div]:bg-blue-500" />
+                </div>
+            </div>
+        )}
       </CardContent>
       {isPending && perspective === 'receiver' && (
         <CardFooter className="p-4 bg-secondary/30 flex justify-end gap-2">
